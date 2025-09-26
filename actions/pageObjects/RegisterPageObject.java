@@ -1,5 +1,60 @@
 package pageObjects;
 
-public class RegisterPageObject {
+import org.openqa.selenium.WebDriver;
 
+import commons.BasePage;
+import pageUIs.RegisterPageUI;
+
+public class RegisterPageObject extends BasePage {
+	WebDriver driver;
+
+	public RegisterPageObject(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public void enterToFirstNameTextbox(String firstName) {
+		waitForElementClickable(driver, RegisterPageUI.FIRST_NAME_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.FIRST_NAME_TEXTBOX, firstName);
+	}
+
+	public void enterToLastNameTextbox(String lastName) {
+		waitForElementClickable(driver, RegisterPageUI.LAST_NAME_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.LAST_NAME_TEXTBOX, lastName);
+
+	}
+
+	public void enterToEmailTextbox(String emailAddress) {
+		waitForElementClickable(driver, RegisterPageUI.EMAIL_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.EMAIL_TEXTBOX, emailAddress);
+
+	}
+
+	public void enterToPasswordTextbox(String password) {
+		waitForElementClickable(driver, RegisterPageUI.PASSWORD_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.PASSWORD_TEXTBOX, password);
+
+	}
+
+	public void enterToConfirmPasswordTextbox(String confirmPassword) {
+		waitForElementClickable(driver, RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, confirmPassword);
+
+	}
+
+	public void clickToRegisterButton() {
+		waitForElementClickable(driver, RegisterPageUI.REGISTER_BUTTON);
+		clickToElement(driver, RegisterPageUI.REGISTER_BUTTON);
+
+	}
+
+	public boolean isSuccessMessageDisplayed() {
+		waitForElementVisible(driver, RegisterPageUI.REGISTERED_SUCCESS_MESSAGE);
+		return isElementDisplayed(driver, RegisterPageUI.REGISTERED_SUCCESS_MESSAGE);
+	}
+
+	public void clickToLogoutLink() {
+		waitForElementClickable(driver, RegisterPageUI.LOGOUT_LINK);
+		clickToElement(driver, RegisterPageUI.LOGOUT_LINK);
+
+	}
 }
