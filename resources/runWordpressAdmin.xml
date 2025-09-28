@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<suite parallel="false" name="nopcommerce - Admin">
-  <test name="Run on Chrome">
-    <classes>
-  <class name="com.nopcommerce.user.Level_02_Login_Page_Object"/>
-    </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
