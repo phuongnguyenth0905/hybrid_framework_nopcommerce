@@ -17,7 +17,7 @@
   </test> 
   
   <test name="Run on Edge">
-  <parameter name="browser" value="edge"/>
+  <parameter name="browser" value="edge_chromium"/>
     <classes>
   <class name="com.nopcommerce.user.Level_03_Login_Page_Object_Multiple_Browser"/>
     </classes>

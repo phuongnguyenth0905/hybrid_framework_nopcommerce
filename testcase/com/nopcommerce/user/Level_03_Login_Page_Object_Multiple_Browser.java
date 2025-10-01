@@ -20,7 +20,7 @@ public class Level_03_Login_Page_Object_Multiple_Browser extends Basetest {
 	RegisterPageObject registerPage;
 	String emailAddress;
 
-	@Parameters({ "browser" })
+	@Parameters("browser")
 	@BeforeClass
 	public void beforeClass(String browserName) {
 
@@ -28,7 +28,7 @@ public class Level_03_Login_Page_Object_Multiple_Browser extends Basetest {
 		emailAddress = "ezrah_bailey" + getRandom() + "@radiant-flow.org"; // ezrah.bailey@radiant-flow.org
 	}
 
-	@Parameters({ "url" })
+	@Parameters("url")
 	@BeforeMethod
 	public void beforeMethod(String appUrl) {
 		driver.get(appUrl);

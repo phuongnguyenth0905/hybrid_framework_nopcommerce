@@ -8,15 +8,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Basetest {
 	WebDriver driver;
+	String projectLocation = System.getProperty("user.dir");
 
 	protected WebDriver getBrowserDriver(String browserName) {
-		if (browserName.equalsIgnoreCase("firefox")) {
+		BrowserEnum browser = BrowserEnum.valueOf(browserName.toUpperCase());
+		if (browser == BrowserEnum.FIREFOX) {
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
-		} else if (browserName.equalsIgnoreCase("chrome")) {
+		} else if (browser == BrowserEnum.CHROME) {
+			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-		} else if (browserName.equalsIgnoreCase("edge")) {
+		} else if (browser == BrowserEnum.EDGE_CHROMIUM) {
+			 //WebDriverManager.edgedriver().setup();
+			System.setProperty("webdriver.edge.driver", projectLocation + "\\browserDriver\\msedgedriver.exe");
+			//WebDriverManager.edgedriver().cachePath("browserDriver").setup();
+			 //WebDriverManager.edgedriver().cachePath(projectLocation + "\\browserDriver").setup();
 			driver = new EdgeDriver();
 		} else {
 			throw new RuntimeException("Please input the browser name!");
