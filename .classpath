@@ -109,6 +109,5 @@
 	<classpathentry kind="lib" path="libWebdriverManager/jna-5.13.0.jar"/>
 	<classpathentry kind="lib" path="libWebdriverManager/slf4j-api-2.0.9.jar"/>
 	<classpathentry kind="lib" path="libWebdriverManager/webdrivermanager-5.6.2.jar"/>
-	<classpathentry kind="lib" path="libWebdriverManager/webdrivermanager-6.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

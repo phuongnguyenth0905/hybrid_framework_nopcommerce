@@ -37,6 +37,29 @@ public class Basetest {
 
 	}
 
+	protected WebDriver getBrowserDriver(String browserName, String url) {
+		BrowserEnum browser = BrowserEnum.valueOf(browserName.toUpperCase());
+		if (browser == BrowserEnum.FIREFOX) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		} else if (browser == BrowserEnum.CHROME) {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+		} else if (browser == BrowserEnum.EDGE_CHROMIUM) {
+			 //WebDriverManager.edgedriver().setup();
+			System.setProperty("webdriver.edge.driver", projectLocation + "\\browserDriver\\msedgedriver.exe");
+			//WebDriverManager.edgedriver().cachePath("browserDriver").setup();
+			 //WebDriverManager.edgedriver().cachePath(projectLocation + "\\browserDriver").setup();
+			driver = new EdgeDriver();
+		} else {
+			throw new RuntimeException("Please input the browser name!");
+		}
+		driver.get(url);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().window().maximize();
+		return driver;
+
+	}
 	protected int getRandom() {
 		Random rand = new Random();
 		return rand.nextInt(9999);
