@@ -15,6 +15,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import pageObjects.AboutUsPageObject;
+import pageObjects.HomePageObject;
+import pageObjects.NewsPageObject;
+import pageObjects.PageGeneratorManager;
+import pageObjects.ShoppingCartPageObject;
+import pageObjects.SiteMapPageObject;
+import pageUIs.AboutUsPageUI;
+import pageUIs.BasePageUI;
+import pageUIs.CustomerInfoPageUI;
+import pageUIs.NewsPageUI;
+import pageUIs.ShoppingCartPageUI;
+import pageUIs.SiteMapPageUI;
+
 public class BasePage {
 	JavascriptExecutor jsExecutor;
 	private long longTimeout = 30;
@@ -364,5 +377,32 @@ public class BasePage {
 	public void waitForElementClickable(WebDriver driver, String locator) {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofMinutes(longTimeout));
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByXpath(locator)));
+	}
+	/*Common Page Object Click switch page*/
+	public ShoppingCartPageObject clickToShoppingcartLink(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.SHOPPING_CART_PAGE_LINK);
+		clickToElement(driver, BasePageUI.SHOPPING_CART_PAGE_LINK);
+		return PageGeneratorManager.getShoppingCartPage(driver);
+	}
+	public HomePageObject clickToHomePage(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.HOME_PAGE_LINK);
+		clickToElement(driver, BasePageUI.HOME_PAGE_LINK);
+		return PageGeneratorManager.getHomePage(driver);
+	}
+	public SiteMapPageObject clickToSiteMapLink(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.SITE_MAP_PAGE_LINK);
+		clickToElement(driver, BasePageUI.SITE_MAP_PAGE_LINK);
+		return PageGeneratorManager.getSiteMapPage(driver);
+	}
+
+	public AboutUsPageObject clickToAboutUsLink(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.ABOUT_US_PAGE_LINK);
+		clickToElement(driver,  BasePageUI.ABOUT_US_PAGE_LINK);
+		return PageGeneratorManager.getAboutUsPage(driver);
+	}
+	public NewsPageObject clickToNewsLink(WebDriver driver) {
+		waitForElementClickable(driver, BasePageUI.NEWS_PAGE_LINK);
+		clickToElement(driver, BasePageUI.NEWS_PAGE_LINK);
+		return PageGeneratorManager.getNewsPage(driver);
 	}
 }

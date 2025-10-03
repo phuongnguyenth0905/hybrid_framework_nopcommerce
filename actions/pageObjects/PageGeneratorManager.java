@@ -19,4 +19,16 @@ public class PageGeneratorManager {
 	public static CustomerInfoPageObject getCustomerInfoPage(WebDriver driver) {
 		return new CustomerInfoPageObject(driver);
 	}
+	public static AboutUsPageObject getAboutUsPage(WebDriver driver) {
+		return new AboutUsPageObject(driver);
+	}
+	public static ShoppingCartPageObject getShoppingCartPage(WebDriver driver) {
+		return new ShoppingCartPageObject(driver);
+	}
+	public static SiteMapPageObject getSiteMapPage(WebDriver driver) {
+		return new SiteMapPageObject(driver);
+	}
+	public static NewsPageObject getNewsPage(WebDriver driver) {
+		return new NewsPageObject(driver);
+	}
 }
