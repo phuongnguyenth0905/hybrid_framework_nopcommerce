@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="nopcommerce - Admin">
+<parameter name="url" value="https://demo.nopcommerce.com/"/>
+
+<test name="Run on Firefox">
+  <parameter name="browser" value="firefox"/>
+    <classes>
+  <class name="com.nopcommerce.user.Level_05_Login_Page_Generator_Manager"/>
+    </classes>
+  </test> 
+   <!-- Test -->
+</suite> <!-- Suite -->

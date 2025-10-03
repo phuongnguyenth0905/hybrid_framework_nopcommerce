@@ -37,4 +37,6 @@ public class HomePageObject  extends BasePage {
 		isElementDisplayed(driver, myAccountLink);
 		return isElementDisplayed(driver, myAccountLink);
 	}
+
+
 }
