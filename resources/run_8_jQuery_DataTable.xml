@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="nopcommerce - Admin">
+<parameter name="url" value="https://www.jqueryscript.net/demo/CRUD-Data-Grid-Plugin-jQuery-Quickgrid/"/>
+
+<test name="Run on Firefox">
+  <parameter name="browser" value="firefox"/>
+    <classes>
+  <class name="com.jquery.table.Level_08_DataTable"/>
+    </classes>
+  </test> 
+   <!-- Test -->
+</suite> <!-- Suite -->
