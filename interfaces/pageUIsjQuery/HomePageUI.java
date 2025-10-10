@@ -9,4 +9,10 @@ public class HomePageUI {
 	public static final String HEADER_NAME_PRECEDING="//th[text()='%s']/preceding-sibling::th";
 	public static final String TEXTBOX_AT_COLUMN_AND_ROW_INDEX="//tr[%s]/td[%s]/input";
 	public static final String DROPDOWN_AT_COLUMN_AND_ROW_INDEX = "//select[@id='tblAppendGrid_country_1']";
+	public static final String UPLOAD_FILE_TYPE = "//input[@name='files[]']";  //input[@type='file']
+	public static final String LOADED_FILE_NAME = "//p[@class='name' and text()='%s']";
+	public static final String UPLOAD_FILE_NAME = "//p[@class='name']/a[text()='%s']";
+	public static final String START_UPLOAD_BUTTON = "//table//button[contains(@class,'start')]";
+
+	
 }

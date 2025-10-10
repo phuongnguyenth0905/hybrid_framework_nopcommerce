@@ -1,6 +1,7 @@
 package commons;
 
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import pageObjects.PageGeneratorManager;
 import pageObjects.ShoppingCartPageObject;
 import pageObjects.SiteMapPageObject;
 import pageUIs.BasePageUI;
+import pageUIsjQuery.HomePageUI;
 
 public class BasePage {
 	JavascriptExecutor jsExecutor;
@@ -125,17 +127,20 @@ public class BasePage {
 	public List<WebElement> getListWebElement(WebDriver driver, String locator) {
 		return driver.findElements(By.xpath(locator));
 	}
-	public String getDynamicLocator(String locator, String... values ) {
-		return String.format(locator,(Object[]) values);
-		
+
+	public String getDynamicLocator(String locator, String... values) {
+		return String.format(locator, (Object[]) values);
+
 	}
 
 	public void clickToElement(WebDriver driver, String locator, String... values) {
 		getWebElement(driver, getDynamicLocator(locator, values)).click();
 	}
+
 	public void clickToElement(WebDriver driver, String locator) {
 		getWebElement(driver, locator).click();
 	}
+
 	private void clickToElement(WebElement element) {
 		element.click();
 	}
@@ -145,6 +150,7 @@ public class BasePage {
 		element.clear();
 		element.sendKeys(value);
 	}
+
 	public void senKeyToElement(WebDriver driver, String locator, String value, String... values) {
 		WebElement element = getWebElement(driver, getDynamicLocator(locator, values));
 		element.clear();
@@ -198,6 +204,7 @@ public class BasePage {
 	public String getElementText(WebDriver driver, String locator) {
 		return getWebElement(driver, locator).getText().trim();
 	}
+
 	public String getElementText(WebDriver driver, String locator, String... values) {
 		return getWebElement(driver, getDynamicLocator(locator, values)).getText().trim();
 	}
@@ -205,6 +212,7 @@ public class BasePage {
 	public String getElementAttributeValue(WebDriver driver, String locator) {
 		return getWebElement(driver, locator).getAttribute("value");
 	}
+
 	public String getElementAttributeByName(WebDriver driver, String locator, String attributeName) {
 		return getWebElement(driver, locator).getAttribute(attributeName);
 	}
@@ -212,7 +220,8 @@ public class BasePage {
 	public int getElementNumber(WebDriver driver, String locator) {
 		return getListWebElement(driver, locator).size();
 	}
-	public int getElementNumber(WebDriver driver, String locator, String ...values) {
+
+	public int getElementNumber(WebDriver driver, String locator, String... values) {
 		return getListWebElement(driver, getDynamicLocator(locator, values)).size();
 	}
 
@@ -233,6 +242,7 @@ public class BasePage {
 	public boolean isElementDisplayed(WebDriver driver, String locator) {
 		return getWebElement(driver, locator).isDisplayed();
 	}
+
 	public boolean isElementDisplayed(WebDriver driver, String locator, String... values) {
 		return getWebElement(driver, getDynamicLocator(locator, values)).isDisplayed();
 	}
@@ -272,7 +282,8 @@ public class BasePage {
 		Actions action = new Actions(driver);
 		action.sendKeys(getWebElement(driver, locator), key).perform();
 	}
-	public void presskeyToElement(WebDriver driver, String locator, Keys key, String ...values) {
+
+	public void presskeyToElement(WebDriver driver, String locator, Keys key, String... values) {
 		Actions action = new Actions(driver);
 		action.sendKeys(getWebElement(driver, getDynamicLocator(locator, values)), key).perform();
 	}
@@ -318,6 +329,7 @@ public class BasePage {
 		jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].click();", getWebElement(driver, locator));
 	}
+
 	public void clickToElementByJS(WebDriver driver, String locator, String... values) {
 		jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].click();", getWebElement(driver, getDynamicLocator(locator, values)));
@@ -386,9 +398,11 @@ public class BasePage {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofMinutes(longTimeout));
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(locator)));
 	}
+
 	public void waitForElementVisible(WebDriver driver, String locator, String... values) {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofMinutes(longTimeout));
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(getDynamicLocator(locator, values))));
+		explicitWait
+				.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(getDynamicLocator(locator, values))));
 	}
 
 	public void waitForListElementVisible(WebDriver driver, String locator) {
@@ -405,21 +419,40 @@ public class BasePage {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofMinutes(longTimeout));
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByXpath(locator)));
 	}
+
 	public void waitForElementClickable(WebDriver driver, String locator, String... values) {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofMinutes(longTimeout));
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByXpath(getDynamicLocator(locator, values))));
 	}
-	/*Common Page Object Click switch page*/
+
+	public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
+		String filePath = System.getProperty("user.dir") + getDirectorySlash("uploadFiles");
+		String fullFileName = "";
+		for (String file : fileNames) {
+			fullFileName = fullFileName + filePath + file + "\n";
+		}
+		fullFileName = fullFileName.trim();
+		senKeyToElement(driver, HomePageUI.UPLOAD_FILE_TYPE, fullFileName);
+	}
+
+	public String getDirectorySlash(String foldeName) {
+		String separator = System.getProperty("file.separator");
+		return separator + foldeName + separator;
+	}
+
+	/* Common Page Object Click switch page */
 	public ShoppingCartPageObject clickToShoppingcartLink(WebDriver driver) {
 		waitForElementClickable(driver, BasePageUI.SHOPPING_CART_PAGE_LINK);
 		clickToElement(driver, BasePageUI.SHOPPING_CART_PAGE_LINK);
 		return PageGeneratorManager.getShoppingCartPage(driver);
 	}
+
 	public HomePageObject clickToHomePage(WebDriver driver) {
 		waitForElementClickable(driver, BasePageUI.HOME_PAGE_LINK);
 		clickToElement(driver, BasePageUI.HOME_PAGE_LINK);
 		return PageGeneratorManager.getHomePage(driver);
 	}
+
 	public SiteMapPageObject clickToSiteMapLink(WebDriver driver) {
 		waitForElementClickable(driver, BasePageUI.SITE_MAP_PAGE_LINK);
 		clickToElement(driver, BasePageUI.SITE_MAP_PAGE_LINK);
@@ -428,30 +461,33 @@ public class BasePage {
 
 	public AboutUsPageObject clickToAboutUsLink(WebDriver driver) {
 		waitForElementClickable(driver, BasePageUI.ABOUT_US_PAGE_LINK);
-		clickToElement(driver,  BasePageUI.ABOUT_US_PAGE_LINK);
+		clickToElement(driver, BasePageUI.ABOUT_US_PAGE_LINK);
 		return PageGeneratorManager.getAboutUsPage(driver);
 	}
+
 	public NewsPageObject clickToNewsLink(WebDriver driver) {
 		waitForElementClickable(driver, BasePageUI.NEWS_PAGE_LINK);
 		clickToElement(driver, BasePageUI.NEWS_PAGE_LINK);
 		return PageGeneratorManager.getNewsPage(driver);
-	}/*Dynamic locator 1- page it (5-20 page)*/
+	}/* Dynamic locator 1- page it (5-20 page) */
+
 	public BasePage openFooterPageByName(WebDriver driver, String pageName) {
 		waitForElementClickable(driver, BasePageUI.FOOTER_PAGE_LINK_NAME, pageName);
 		waitForElementClickable(driver, BasePageUI.FOOTER_PAGE_LINK_NAME, pageName);
 		if (pageName.equals("Shopping cart")) {
 			return PageGeneratorManager.getShoppingCartPage(driver);
-		} else if(pageName.equals("Sitemap")){
+		} else if (pageName.equals("Sitemap")) {
 			return PageGeneratorManager.getSiteMapPage(driver);
-		}else if(pageName.equals("About us")){
+		} else if (pageName.equals("About us")) {
 			return PageGeneratorManager.getAboutUsPage(driver);
-		}else if(pageName.equals("News")){
+		} else if (pageName.equals("News")) {
 			return PageGeneratorManager.getNewsPage(driver);
-		}else {
-			throw new RuntimeException("Please input the correct page name!"); 
+		} else {
+			throw new RuntimeException("Please input the correct page name!");
 		}
 	}
-	/*NHieu page- vai chuc toi vai tram page*/
+
+	/* NHieu page- vai chuc toi vai tram page */
 	public void openFooterPageName(WebDriver driver, String pageName) {
 		waitForElementClickable(driver, BasePageUI.FOOTER_PAGE_LINK_NAME, pageName);
 		waitForElementClickable(driver, BasePageUI.FOOTER_PAGE_LINK_NAME, pageName);

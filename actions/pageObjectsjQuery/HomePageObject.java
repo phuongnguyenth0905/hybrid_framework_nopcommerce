@@ -1,7 +1,10 @@
 package pageObjectsjQuery;
 
+import java.util.List;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import commons.BasePage;
 import pageUIsjQuery.HomePageUI;
@@ -46,5 +49,38 @@ public class HomePageObject extends BasePage {
 		waitForElementVisible(driver, HomePageUI.HEADER_NAME_PRECEDING, columName);
 		int coumnIndex = getElementNumber(driver, HomePageUI.HEADER_NAME_PRECEDING, columName) + 1;
 		senKeyToElement(driver, HomePageUI.TEXTBOX_AT_COLUMN_AND_ROW_INDEX,	value, rowIndex, String.valueOf(coumnIndex));
+	}
+
+	public boolean areFileNameLoadedSuccess(String[] fileNames) {
+		boolean status=false;
+		for(String fileName:fileNames) {
+			if (isElementDisplayed(driver, HomePageUI.LOADED_FILE_NAME, fileName)) {
+				status=true;
+			} else {
+				return status;
+			}
+		}
+		return status;
+	}
+
+	public void clickToStartUploadButton() {
+		List<WebElement> uploadButtons=getListWebElement(driver, HomePageUI.START_UPLOAD_BUTTON);
+		for (WebElement uploadBtn : uploadButtons) {
+			uploadBtn.click();
+			sleepInSecond(2);
+		}
+		
+	}
+
+	public boolean areFileUploadedSuccess(String[] fileNames) {
+		boolean status=false;
+		for(String fileName:fileNames) {
+			if (isElementDisplayed(driver, HomePageUI.UPLOAD_FILE_NAME, fileName)) {
+				status=true;
+			} else {
+				return status;
+			}
+		}
+		return status;
 	}
 }

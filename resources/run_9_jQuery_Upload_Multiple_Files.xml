@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="nopcommerce - Admin">
+<parameter name="url" value="https://blueimp.github.io/jQuery-File-Upload/"/>
+
+<test name="Run on Firefox">
+  <parameter name="browser" value="chrome"/>
+    <classes>
+  <class name="com.jquery.table.Level_09_Upload_Multiple_Files"/>
+    </classes>
+  </test> 
+   <!-- Test -->
+</suite> <!-- Suite -->
