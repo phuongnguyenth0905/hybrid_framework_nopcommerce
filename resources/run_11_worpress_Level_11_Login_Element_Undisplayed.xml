@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="nopcommerce - Admin">
+<parameter name="url" value="https://wordpress.com/log-in"/>
+
+<test name="Run on Firefox">
+  <parameter name="browser" value="chrome"/>
+    <classes>
+  <class name="com.wordpress.posts.Level_11_Login_Element_Undisplayed"/>
+    </classes>
+  </test> 
+   <!-- Test -->
+</suite> <!-- Suite -->
+ 

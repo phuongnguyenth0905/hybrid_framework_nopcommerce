@@ -31,7 +31,7 @@ public class Basetest {
 		} else {
 			throw new RuntimeException("Please input the browser name!");
 		}
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
 		driver.manage().window().maximize();
 		return driver;
 
@@ -55,7 +55,7 @@ public class Basetest {
 			throw new RuntimeException("Please input the browser name!");
 		}
 		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
 		driver.manage().window().maximize();
 		return driver;
 

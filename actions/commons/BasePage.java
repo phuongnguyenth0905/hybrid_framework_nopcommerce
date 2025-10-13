@@ -1,7 +1,7 @@
 package commons;
 
 import java.time.Duration;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +27,8 @@ import pageUIsjQuery.HomePageUI;
 
 public class BasePage {
 	JavascriptExecutor jsExecutor;
-	private long longTimeout = 30;
+	private long longTimeout = GlobalConstants.LONG_TIMEOUT;
+	private long shortTimeout = GlobalConstants.SHORT_TIMEOUT;
 
 	public static BasePage getBasePage() {
 		return new BasePage();
@@ -239,6 +240,16 @@ public class BasePage {
 		}
 	}
 
+	public boolean isControlDisplayed(WebDriver driver, String locator) {
+		boolean status = false;
+		try {
+			status = getWebElement(driver, locator).isDisplayed();
+			return status;
+		} catch (Exception e) {
+			return status;
+		}
+	}
+
 	public boolean isElementDisplayed(WebDriver driver, String locator) {
 		return getWebElement(driver, locator).isDisplayed();
 	}
@@ -438,6 +449,47 @@ public class BasePage {
 	public String getDirectorySlash(String foldeName) {
 		String separator = System.getProperty("file.separator");
 		return separator + foldeName + separator;
+	}
+
+	public boolean isElementUndisplayed(WebDriver driver, String locator) {
+		System.out.println("Start time" + new Date().toString());
+		overrideImplicitTimeout(driver, shortTimeout);
+		List<WebElement> elements = getListWebElement(driver, locator);
+		overrideImplicitTimeout(driver, longTimeout);
+		if (elements.size() == 0) {
+			System.out.println("Element not in DOM");
+			System.out.println("End time" + new Date().toString());
+			return true;
+		} else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
+			System.out.println("Element in DOM but not visible/ displayed");
+			System.out.println("End time" + new Date().toString());
+			return true;
+		} else {
+			System.out.println("Element in DOM and visible");
+			return false;
+		}
+	}
+	public boolean isElementUndisplayed(WebDriver driver, String locator, String... values) {
+		System.out.println("Start time" + new Date().toString());
+		overrideImplicitTimeout(driver, shortTimeout);
+		List<WebElement> elements = getListWebElement(driver, getDynamicLocator(locator, values));
+		overrideImplicitTimeout(driver, longTimeout);
+		if (elements.size() == 0) {
+			System.out.println("Element not in DOM");
+			System.out.println("End time" + new Date().toString());
+			return true;
+		} else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
+			System.out.println("Element in DOM but not visible/ displayed");
+			System.out.println("End time" + new Date().toString());
+			return true;
+		} else {
+			System.out.println("Element in DOM and visible");
+			return false;
+		}
+	}
+
+	public void overrideImplicitTimeout(WebDriver driver, long timeout) {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
 	}
 
 	/* Common Page Object Click switch page */

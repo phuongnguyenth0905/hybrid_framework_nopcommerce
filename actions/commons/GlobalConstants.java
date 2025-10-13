@@ -13,4 +13,5 @@ public class GlobalConstants {
 	public static final String DB_NAME="testauto";
 	public static final String DB_USER="root";
 	public static final String DB_PASS="admin";
+	
 }
