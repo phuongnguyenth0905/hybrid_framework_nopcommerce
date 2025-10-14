@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.Reporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -23,10 +25,11 @@ public class Basetest {
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
 		} else if (browser == BrowserEnum.EDGE_CHROMIUM) {
-			 //WebDriverManager.edgedriver().setup();
+			// WebDriverManager.edgedriver().setup();
 			System.setProperty("webdriver.edge.driver", projectLocation + "\\browserDriver\\msedgedriver.exe");
-			//WebDriverManager.edgedriver().cachePath("browserDriver").setup();
-			 //WebDriverManager.edgedriver().cachePath(projectLocation + "\\browserDriver").setup();
+			// WebDriverManager.edgedriver().cachePath("browserDriver").setup();
+			// WebDriverManager.edgedriver().cachePath(projectLocation +
+			// "\\browserDriver").setup();
 			driver = new EdgeDriver();
 		} else {
 			throw new RuntimeException("Please input the browser name!");
@@ -46,10 +49,11 @@ public class Basetest {
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
 		} else if (browser == BrowserEnum.EDGE_CHROMIUM) {
-			 //WebDriverManager.edgedriver().setup();
+			// WebDriverManager.edgedriver().setup();
 			System.setProperty("webdriver.edge.driver", projectLocation + "\\browserDriver\\msedgedriver.exe");
-			//WebDriverManager.edgedriver().cachePath("browserDriver").setup();
-			 //WebDriverManager.edgedriver().cachePath(projectLocation + "\\browserDriver").setup();
+			// WebDriverManager.edgedriver().cachePath("browserDriver").setup();
+			// WebDriverManager.edgedriver().cachePath(projectLocation +
+			// "\\browserDriver").setup();
 			driver = new EdgeDriver();
 		} else {
 			throw new RuntimeException("Please input the browser name!");
@@ -60,8 +64,46 @@ public class Basetest {
 		return driver;
 
 	}
+
 	protected int getRandom() {
 		Random rand = new Random();
 		return rand.nextInt(9999);
+	}
+
+	protected boolean verifyTrue(boolean condition) {
+		boolean pass = true;
+		try {
+			Assert.assertTrue(condition);
+		} catch (Throwable e) {
+			pass = false;
+
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return pass;
+	}
+
+	protected boolean verifyFalse(boolean condition) {
+		boolean pass = true;
+		try {
+			Assert.assertFalse(condition);
+		} catch (Throwable e) {
+			pass = false;
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return pass;
+	}
+
+	protected boolean verifyEquals(Object actual, Object expected) {
+		boolean pass = true;
+		try {
+			Assert.assertEquals(actual, expected);
+		} catch (Throwable e) {
+			pass = false;
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return pass;
 	}
 }

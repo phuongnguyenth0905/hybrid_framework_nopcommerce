@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite parallel="false" name="Wordpress - Admin">
+<listeners>
+<listener class-name="commons.MethodListener"/>
+</listeners>
 <parameter name="url" value="https://wordpress.com/log-in"/>
 
 <test name="Run on Firefox">
   <parameter name="browser" value="chrome"/>
     <classes>
-  <class name="com.wordpress.posts.Level_11_Login_Element_Undisplayed"/>
+  <class name="com.wordpress.posts.Level_12_Login_Assert_Verrify"/>
     </classes>
   </test> 
    <!-- Test -->
