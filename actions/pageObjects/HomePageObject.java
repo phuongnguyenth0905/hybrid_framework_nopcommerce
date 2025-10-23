@@ -37,6 +37,25 @@ public class HomePageObject extends BasePage{
 		clickToElement(driver, HomePageUI.MY_ACCOUNT_LINK);
 		return PageGeneratorManager.getCustomerInfoPage(driver);
 	}
-
-
+	
+	public boolean isLoginLinkDisplayed() {
+		//waitToElementVisible(driver, UserHomePageUI.LOGIN_LINK);
+		return isElementDisplayed(driver, HomePageUI.LOGIN_LINK);
+	}
+	public boolean isShoppingCartNoItemTooltipUndisplayed() {
+		waitForElementInvisible(driver, HomePageUI.SHOPPING_CART_NO_ITEM_TOOLTIP);
+		return isElementUndisplayed(driver, HomePageUI.SHOPPING_CART_NO_ITEM_TOOLTIP);
+	}
+	public boolean isRegisterLinkUndisplayed() {
+		waitForElementInvisible(driver, HomePageUI.REGISTER_LINK);
+		return isElementUndisplayed(driver, HomePageUI.REGISTER_LINK);
+	}
+	public boolean isLogoutLinkDisplayed() {
+		waitForElementVisible(driver, HomePageUI.LOGOUT_LINK);
+		return isElementDisplayed(driver, HomePageUI.LOGOUT_LINK);
+	}
+	public boolean isLoginLinkUndisplayed() {
+		waitForElementInvisible(driver, HomePageUI.LOGIN_LINK);
+		return isElementUndisplayed(driver, HomePageUI.LOGIN_LINK);
+	}
 }

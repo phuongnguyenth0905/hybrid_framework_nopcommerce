@@ -7,14 +7,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.Basetest;
+import commons.BaseTest;
 import pageObjects.CustomerInfoPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.PageGeneratorManager;
 import pageObjects.RegisterPageObject;
 
-public class Level_05_Login_Page_Generator_Manager extends Basetest {
+public class Level_05_Login_Page_Generator_Manager extends BaseTest {
 	WebDriver driver;
 	HomePageObject homePage;
 	LoginPageObject loginPage;
@@ -59,7 +59,7 @@ public class Level_05_Login_Page_Generator_Manager extends Basetest {
 	@Test
 	public void User_03_Customer_info() {
 		customerInfoPage = homePage.clickToMyAccountLink();
-		Assert.assertEquals(customerInfoPage.getFistNameTextboxValue(), "Florence");
+		Assert.assertEquals(customerInfoPage.getFirstNameTextboxValue(), "Florence");
 		Assert.assertEquals(customerInfoPage.getLastNameTextboxValue(), "Williams");
 		Assert.assertEquals(customerInfoPage.getEmailTextboxValue(), emailAddress);
 	}

@@ -2,7 +2,10 @@ package commons;
 
 import java.time.Duration;
 import java.util.Random;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,10 +15,17 @@ import org.testng.Reporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Basetest {
+public class BaseTest {
 	WebDriver driver;
 	String projectLocation = System.getProperty("user.dir");
+	protected final Logger log;
 
+	protected BaseTest() {
+		log= LogManager.getLogger(getClass());
+	}
+	public WebDriver getDriver() {
+		return driver;
+	}
 	protected WebDriver getBrowserDriver(String browserName) {
 		BrowserEnum browser = BrowserEnum.valueOf(browserName.toUpperCase());
 		if (browser == BrowserEnum.FIREFOX) {
@@ -106,4 +116,5 @@ public class Basetest {
 		}
 		return pass;
 	}
+	
 }

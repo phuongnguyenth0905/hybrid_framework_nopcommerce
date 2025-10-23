@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <!-- ============ APPENDERS ============ -->
+    <Appenders>
+
+        <!-- In console -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %c{1}:%L - %msg%n"/>
+        </Console>
+
+        <!-- Ghi log framework Wordpress -->
+        <RollingFile name="WordpressLog"
+                     fileName="logs/wordpress/Wordpress.log"
+                     filePattern="logs/wordpress/Wordpress-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!-- Ghi log framework NopCommerce -->
+        <RollingFile name="NopCommerceLog"
+                     fileName="logs/nopcommerce/NopCommerce.log"
+                     filePattern="logs/nopcommerce/NopCommerce-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!-- Ghi log framework jQuery -->
+        <RollingFile name="jQueryLog"
+                     fileName="logs/jquery/jQuery.log"
+                     filePattern="logs/jquery/jQuery-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <!-- ============ LOGGERS ============ -->
+    <Loggers>
+
+        <!-- Wordpress -->
+        <Logger name="com.wordpress" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="WordpressLog"/>
+        </Logger>
+
+        <!-- NopCommerce -->
+        <Logger name="com.nopcommerce" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="NopCommerceLog"/>
+        </Logger>
+
+        <!-- jQuery -->
+        <Logger name="com.jquery" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="jQueryLog"/>
+        </Logger>
+
+        <!-- Root logger (default cho các class khác) -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

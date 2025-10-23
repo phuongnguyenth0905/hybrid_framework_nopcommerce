@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="Nopcommerce - Admin">
+	<listeners>
+		<listener class-name="commons.MethodListener" />
+		<listener class-name="reportConfig.ExtentTestListenerV5"/>
+	</listeners>
+	<parameter name="url" value="https://demo.nopcommerce.com" />
+
+	<test name="Run on chrome">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.nopcommerce.user.Level_13_Register_Login_Log_Report" />
+		</classes>
+	</test>
+	<!-- Test -->
+</suite> <!--
+Suite -->
+ 

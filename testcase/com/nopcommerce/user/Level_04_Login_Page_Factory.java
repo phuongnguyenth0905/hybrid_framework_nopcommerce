@@ -7,13 +7,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.Basetest;
+import commons.BaseTest;
 import pageFactory.nopCommerce.HomePageObject;
 import pageFactory.nopCommerce.LoginPageObject;
 import pageFactory.nopCommerce.RegisterPageObject;
 
 
-public class Level_04_Login_Page_Factory extends Basetest {
+public class Level_04_Login_Page_Factory extends BaseTest {
 	WebDriver driver;
 	HomePageObject homePage;
 	LoginPageObject loginPage;

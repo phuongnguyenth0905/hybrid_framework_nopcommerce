@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.Basetest;
+import commons.BaseTest;
 import pageObjects.AboutUsPageObject;
 import pageObjects.CustomerInfoPageObject;
 import pageObjects.HomePageObject;
@@ -18,7 +18,7 @@ import pageObjects.RegisterPageObject;
 import pageObjects.ShoppingCartPageObject;
 import pageObjects.SiteMapPageObject;
 
-public class Level_06_Login_Page_Switch_Page extends Basetest {
+public class Level_06_Login_Page_Switch_Page extends BaseTest {
 	WebDriver driver;
 	String emailAddress;
 	HomePageObject homePage;
@@ -66,7 +66,7 @@ public class Level_06_Login_Page_Switch_Page extends Basetest {
 	@Test
 	public void User_03_Customer_info() {
 		customerInfoPage = homePage.clickToMyAccountLink();
-		Assert.assertEquals(customerInfoPage.getFistNameTextboxValue(), "Florence");
+		Assert.assertEquals(customerInfoPage.getFirstNameTextboxValue(), "Florence");
 		Assert.assertEquals(customerInfoPage.getLastNameTextboxValue(), "Williams");
 		Assert.assertEquals(customerInfoPage.getEmailTextboxValue(), emailAddress);
 	}

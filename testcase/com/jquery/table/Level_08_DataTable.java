@@ -7,11 +7,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.Basetest;
+import commons.BaseTest;
 import pageObjectsjQuery.HomePageObject;
 import pageObjectsjQuery.PageGeneratorManager;
 
-public class Level_08_DataTable extends Basetest {
+public class Level_08_DataTable extends BaseTest {
 	WebDriver driver;
 
 	@Parameters({ "browser", "url" })

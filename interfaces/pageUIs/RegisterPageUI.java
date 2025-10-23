@@ -9,5 +9,7 @@ public class RegisterPageUI {
 	public static final String REGISTER_BUTTON = "//button[@id='register-button']";
 	public static final String REGISTERED_SUCCESS_MESSAGE = "//div[@class='result' and text()='Your registration completed']";
 	public static final String LOGOUT_LINK = "//a[@class='ico-logout']";
+	public static final String GENDER_MALE_RADIO = "//input[@id='gender-male']";
+	public static final String COMPANY_TEXTBOX = "//input[@id='Company']";
 
 }

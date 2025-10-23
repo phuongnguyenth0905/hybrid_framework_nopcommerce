@@ -12,7 +12,7 @@ import commons.BaseTest;
 import pageObjectsWordpress.DashboardPageObject;
 import pageObjectsWordpress.LoginPageObject;
 
-public class Level_12_Login_Assert_Verrify extends BaseTest{
+public class Level_13_Login_Log_Report extends BaseTest{
 	WebDriver driver;
 	// String projectLocation = System.getProperty("user.dir");
 	LoginPageObject loginPage;

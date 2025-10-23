@@ -60,4 +60,13 @@ public class RegisterPageObject extends BasePage {
 		return PageGeneratorManager.getHomePage(driver);
 
 	}
+	public void clickToGenderMaleRadioButton() {
+		waitForElementClickable(driver, RegisterPageUI.GENDER_MALE_RADIO);
+		clickToElement(driver, RegisterPageUI.GENDER_MALE_RADIO);
+	}
+	public void inputToCompanyTexbox(String companyName) {
+		waitForElementVisible(driver, RegisterPageUI.COMPANY_TEXTBOX);
+		senKeyToElement(driver, RegisterPageUI.COMPANY_TEXTBOX, companyName);
+
+	}
 }

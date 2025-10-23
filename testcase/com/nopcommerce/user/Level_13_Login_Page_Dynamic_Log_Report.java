@@ -18,7 +18,7 @@ import pageObjects.RegisterPageObject;
 import pageObjects.ShoppingCartPageObject;
 import pageObjects.SiteMapPageObject;
 
-public class Level_07_Login_Page_Dynamic_Locator extends BaseTest {
+public class Level_13_Login_Page_Dynamic_Log_Report extends BaseTest {
 	WebDriver driver;
 	String emailAddress;
 	HomePageObject homePage;
