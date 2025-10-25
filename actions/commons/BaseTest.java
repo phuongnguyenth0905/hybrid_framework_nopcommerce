@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -14,6 +16,7 @@ import org.testng.Assert;
 import org.testng.Reporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Attachment;
 
 public class BaseTest {
 	WebDriver driver;
@@ -23,6 +26,11 @@ public class BaseTest {
 	protected BaseTest() {
 		log= LogManager.getLogger(getClass());
 	}
+	@Attachment(value = "Screenshot", type = "image/png")
+	public byte[] takeScreenshot(WebDriver driver) {
+	    return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	}
+
 	public WebDriver getDriver() {
 		return driver;
 	}

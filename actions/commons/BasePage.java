@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import commons.GlobalConstants;
 import pageObjects.AboutUsPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.NewsPageObject;

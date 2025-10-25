@@ -2,6 +2,9 @@
 <suite parallel="false" name="Wordpress - Admin">
 	<listeners>
 		<listener class-name="commons.MethodListener" />
+		<listener class-name="reportConfig.AllureTestListener"/>
+		  <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+
 		<listener class-name="reportConfig.ChainTestReport"/>
 		<!--<listener class-name="reportConfig.ExtentTestListenerV5"/>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
@@ -15,6 +18,18 @@
 			<class name="com.wordpress.posts.Level_13_Login_Admin_Log_Report" />
 		</classes>
 	</test>
+	<!--<test name="Run on firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="com.wordpress.posts.Level_13_Login_Admin_Log_Report" />
+		</classes>
+	</test>
+	<test name="Run on edge">
+		<parameter name="browser" value="edge" />
+		<classes>
+			<class name="com.wordpress.posts.Level_13_Login_Admin_Log_Report" />
+		</classes>
+	</test>-->
 	<!-- Test -->
 </suite> <!--
 Suite -->
