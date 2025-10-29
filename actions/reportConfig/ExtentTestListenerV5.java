@@ -15,11 +15,14 @@ import commons.BaseTest;
 
 public class ExtentTestListenerV5 implements ITestListener {
 
-    @Override
-    public void onStart(ITestContext context) {
-        // Tạo instance report trước khi chạy suite
-        ExtentManager.createInstance();
-    }
+	@Override
+	public void onStart(ITestContext context) {
+	    try {
+	        freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
+	    } catch (Exception e) {}
+	    ExtentManager.getExtent();
+	}
+
 
     @Override
     public void onFinish(ITestContext context) {

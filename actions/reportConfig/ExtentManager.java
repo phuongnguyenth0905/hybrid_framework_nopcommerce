@@ -7,7 +7,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
+import freemarker.log.Logger;
 import commons.GlobalConstants;
 
 public class ExtentManager {
@@ -39,8 +39,24 @@ public class ExtentManager {
 
     // getter để listener gọi flush()
     public synchronized static ExtentReports getExtent() {
-        return createInstance();
-    }
+    	 if (extent == null) {
+
+             // ⚙️ TẮT TOÀN BỘ FREEMARKER DEBUG
+             try {
+                 Logger.selectLoggerLibrary(Logger.LIBRARY_NONE);
+             } catch (Exception e) {
+                 System.err.println("Freemarker logger suppression failed: " + e.getMessage());
+             }
+
+             ExtentSparkReporter spark = new ExtentSparkReporter("reports/extent/index.html");
+             spark.config().setReportName("Automation Report");
+             spark.config().setDocumentTitle("Test Report");
+             extent = new ExtentReports();
+             extent.attachReporter(spark);
+         }
+         return extent;
+     }
+    
 
     // start test cho thread hiện tại
     public synchronized static ExtentTest startTest(String testName, String desc) {
