@@ -3,10 +3,9 @@ package commons;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Random;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +13,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import java.lang.reflect.Method;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Attachment;
@@ -26,6 +29,10 @@ public class BaseTest {
 
 	protected BaseTest() {
 		log= LogManager.getLogger(getClass());
+	}
+	@BeforeMethod
+	public void beforeMethod(Method method) {
+	    log.info("=== START TEST: " + method.getName() + " ===");
 	}
 	@Attachment(value = "Screenshot", type = "image/png")
 	public byte[] takeScreenshot(WebDriver driver) {
@@ -122,8 +129,17 @@ public class BaseTest {
 			pass = false;
 			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
 			Reporter.getCurrentTestResult().setThrowable(e);
-		}
+			}
 		return pass;
+	}
+	@AfterMethod
+	public void afterMethod(ITestResult result) {
+		if (result.getStatus() == ITestResult.FAILURE) {
+            log.error("❌ FAILED: " + result.getName());
+            log.error("➡ Reason: " + result.getThrowable().getMessage());
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
+            log.info("✅ PASSED: " + result.getName());
+        }
 	}
 	protected void closeBrowserDriver() {
 		String cmd = null;
@@ -173,5 +189,7 @@ public class BaseTest {
 			}
 		}
 	}
+	
+	
 	
 }

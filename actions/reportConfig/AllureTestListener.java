@@ -7,8 +7,13 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import commons.BaseTest;
+import com.aventstack.extentreports.ExtentTest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class AllureTestListener implements ITestListener {
+	
+	private static final Logger log = LogManager.getLogger(AllureTestListener.class);
 
 	private static String getTestMethodName(ITestResult iTestResult) {
 		return iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -34,43 +39,58 @@ public class AllureTestListener implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult iTestResult) {
-		Object testClass = iTestResult.getInstance();
-		WebDriver driver = ((BaseTest) testClass).getDriver();
-		saveScreenshotPNG(iTestResult.getName(), driver);
-		saveTextLog(getTestMethodName(iTestResult) + " failed and screenshot taken!");
+		 Throwable error = iTestResult.getThrowable();
+		    String testName = iTestResult.getMethod().getMethodName();
+
+		    // Lấy message lỗi gọn nhất
+		    String shortMessage = "Unknown error";
+		    if (error != null && error.getMessage() != null) {
+		        // Lấy chỉ dòng đầu tiên, cắt ngắn nếu quá dài
+		        shortMessage = error.getMessage().split("\n")[0];
+		        if (shortMessage.length() > 120) {
+		            shortMessage = shortMessage.substring(0, 120) + "...";
+		        }
+		    }
+
+		    // Log ra console gọn gàng
+		    log.error("❌ FAILED: {}", testName);
+		    log.error("➡ Reason: {}", shortMessage);
 	}
-	
 	@Override
 	public void onStart(ITestContext iTestContext) {
-		System.out.println("=== Allure Listener started ===");
-		String projectRoot = System.getProperty("user.dir"); // đường dẫn project khi chạy Eclipse
-	    commons.AllureEnvWriter.writeEnvironment(projectRoot);
+		log.info("=== ALLURE LISTENER STARTED  ===");
+		//String projectRoot = System.getProperty("user.dir"); // đường dẫn project khi chạy Eclipse
+	   // commons.AllureEnvWriter.writeEnvironment(projectRoot);
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult iTestResult) {
-		// TODO Auto-generated method stub
+		log.warn("⚠️ SKIPPED: " + iTestResult.getName());
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-		// TODO Auto-generated method stub
+		log.error("❌ FAILED: " + iTestResult.getName());
+        log.error(iTestResult.getThrowable().getMessage());
 	}
 
 	@Override
 	public void onFinish(ITestContext arg0) {
-		  System.out.println("=== Allure Listener finished ===");
+		log.info("=== ALLURE LISTENER FINISHED  ===");
 
 	}
 
 	@Override
-	public void onTestStart(ITestResult arg0) {
-		// TODO Auto-generated method stub
+	public void onTestStart(ITestResult result) {
+		System.out.println("\n===============================");
+        log.info("🚀 START TEST: " + result.getMethod().getMethodName());
+        System.out.println("===============================");
 	}
 
 	@Override
-	public void onTestSuccess(ITestResult arg0) {
-		// TODO Auto-generated method stub
+	public void onTestSuccess(ITestResult result) {
+		log.info("✅ PASSED: " + result.getMethod().getMethodName());
+        System.out.println("===============================");
 	}
 
 }

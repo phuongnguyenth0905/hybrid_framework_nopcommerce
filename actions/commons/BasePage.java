@@ -25,6 +25,8 @@ import pageObjects.PageGeneratorManager;
 import pageObjects.ShoppingCartPageObject;
 import pageObjects.SiteMapPageObject;
 import pageUIs.BasePageUI;
+import pageUIs.orangeHRM.EmployeeDetailPageUI;
+import pageUIs.orangeHRM.orangeHRMBasePageUI;
 import pageUIsjQuery.HomePageUI;
 
 public class BasePage {
@@ -150,7 +152,9 @@ public class BasePage {
 
 	public void senKeyToElement(WebDriver driver, String locator, String value) {
 		WebElement element = getWebElement(driver, locator);
-		element.clear();
+		element.click(); // focus vào input
+		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		element.sendKeys(Keys.DELETE);
 		element.sendKeys(value);
 	}
 
@@ -239,6 +243,12 @@ public class BasePage {
 			element.click();
 		}
 	}
+	public void checkToCheckboxOrRadio(WebDriver driver, String locator, String...values) {
+		WebElement element = getWebElement(driver, getDynamicLocator(locator, values));
+		if (!element.isSelected()) {
+			element.click();
+		}
+	}
 
 	public void uncheckToCheckbox(WebDriver driver, String locator) {
 		WebElement element = getWebElement(driver, locator);
@@ -271,6 +281,9 @@ public class BasePage {
 
 	public boolean isElementSelected(WebDriver driver, String locator) {
 		return getWebElement(driver, locator).isSelected();
+	}
+	public boolean isElementSelected(WebDriver driver, String locator, String... values) {
+		return getWebElement(driver, getDynamicLocator(locator, values)).isSelected();
 	}
 
 	public void switchToFrame(WebDriver driver, String locator) {
@@ -451,6 +464,10 @@ public class BasePage {
 		WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
 		explicitWait.until(ExpectedConditions.elementToBeClickable(getByXpath(getDynamicLocator(locator, values))));
 	}
+	public void waitForElementPresence(WebDriver driver, String locator, String... values) {
+	    WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
+	    explicitWait.until(ExpectedConditions.presenceOfElementLocated(getByXpath(getDynamicLocator(locator, values))));
+	}
 
 	public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
 		String filePath = System.getProperty("user.dir") + getDirectorySlash("uploadFiles");
@@ -581,4 +598,73 @@ public class BasePage {
 		waitForElementVisible(driver, BasePageUI.DYNAMIC_ERROR_MESSAGE_BY_ID, fieldID);
 		return getElementText(driver, BasePageUI.DYNAMIC_ERROR_MESSAGE_BY_ID, fieldID);
 	}
+	/** orange HRM Project **/
+	public void openMenuePageByName(WebDriver driver, String pageName) {
+		waitForElementClickable(driver, orangeHRMBasePageUI.DYNAMIC_MENU_LINK, pageName);
+		clickToElement(driver, orangeHRMBasePageUI.DYNAMIC_MENU_LINK, pageName);
+	}
+	public void clickToButotnByNameAtFormHeader(WebDriver driver, String headerName, String buttonName) {
+		waitForElementClickable(driver, orangeHRMBasePageUI.DYNAMIC_BUTTON_BY_NAME_AT_FORM_HEADER, headerName, buttonName);
+		clickToElement(driver, orangeHRMBasePageUI.DYNAMIC_BUTTON_BY_NAME_AT_FORM_HEADER, headerName, buttonName);
+	}
+	public void enterToTextboxDynamicByLabelAtForm(WebDriver driver, String labelName, String valueText) {
+	    waitForElementVisible(driver, orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, labelName);
+	    senKeyToElement(driver, orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, valueText, labelName);
+	   
+	}
+	public void selectItemDynamicInDropdownByLabelAtForm(WebDriver driver, String labelName, String valueItem) {
+	    // B1: Click mở dropdown (theo label)
+	    String dropdownLocator = String.format(orangeHRMBasePageUI.DYNAMIC_DROPDOWN_BY_LABEL_AT_FORM, labelName);
+	    waitForElementPresence(driver, orangeHRMBasePageUI.DYNAMIC_DROPDOWN_BY_LABEL_AT_FORM, labelName);
+	    waitForElementClickable(driver, dropdownLocator);
+	    clickToElement(driver, dropdownLocator);
+	    sleepInSecond(1);
+
+	    // B2: Click chọn item theo text
+	    String itemLocator = String.format(orangeHRMBasePageUI.DYNAMIC_DROPDOWN_OPTION_BY_TEXT, valueItem);
+	    waitForElementPresence(driver, orangeHRMBasePageUI.DYNAMIC_DROPDOWN_OPTION_BY_TEXT, valueItem);
+	    waitForElementClickable(driver, itemLocator);
+	    clickToElement(driver, itemLocator);
+	}
+/***Verify data**/
+	public String getTextboxValueDynamicByLabelAtForm(WebDriver driver, String labelName) {
+	    String locator = String.format(
+	        orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, labelName);
+	    waitForElementVisible(driver, locator);
+	    return getElementAttributeByName(driver, locator, "value");
+	}
+	public String getSelectedValueDynamicInDropdownByLabelAtForm(WebDriver driver, String labelName) {
+	    String locator = String.format(
+	        orangeHRMBasePageUI.DYNAMIC_DROPDOWN_BY_LABEL_AT_FORM, labelName);
+	    waitForElementVisible(driver, locator);
+	    return getWebElement(driver, locator).getText().trim();
+	}
+	//
+	public void clickToToggleSwitchByLabelAtForm(WebDriver driver, String labelName, boolean status) {
+	    // Tìm toggle theo label
+	    String locator = String.format(orangeHRMBasePageUI.DYNAMIC_TOGGLE_SWITCH_BY_LABEL_AT_FORM, labelName);
+	    WebElement toggle = getWebElement(driver, locator);
+
+	    // Kiểm tra trạng thái hiện tại
+	    boolean isSelected = toggle.isSelected();
+
+	    // Nếu trạng thái chưa đúng thì mới click
+	    if (status != isSelected) {
+	        waitForElementClickable(driver, locator);
+	        clickToElement(driver, locator);
+	    }
+	}
+	public int countElementSize(WebDriver driver, String locator) {
+	    return getListWebElement(driver, locator).size();
+	}
+	public int countElementSize(WebDriver driver, String locator, String...value) {
+	    return getListWebElement(driver, getDynamicLocator(locator, value)).size();
+	}
+//
+	public boolean isInformationDisplayAtColumnAndRowNumber(WebDriver driver, String tableID, String columnName, String rowIndex, String expectedValue) {
+	int columnNameIndex=countElementSize(driver, orangeHRMBasePageUI.DYNAMIC_TABLE_COLUMN_NAME_SIBLING, tableID, columnName)+1;
+	String actualValue=getElementText(driver, orangeHRMBasePageUI.CELL_VALUE_MIX_BY_COLUMN_AND_ROW_INDEX, rowIndex,String.valueOf(columnNameIndex));
+	return actualValue.equals(expectedValue);
+}
+
 }
