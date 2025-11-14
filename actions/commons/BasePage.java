@@ -1,6 +1,9 @@
 package commons;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +31,15 @@ import pageUIs.BasePageUI;
 import pageUIs.orangeHRM.EmployeeDetailPageUI;
 import pageUIs.orangeHRM.orangeHRMBasePageUI;
 import pageUIsjQuery.HomePageUI;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BasePage {
 	JavascriptExecutor jsExecutor;
@@ -597,7 +609,116 @@ public class BasePage {
 	public String getErrorMessageAtMandantoryFieldByID(WebDriver driver, String fieldID) {
 		waitForElementVisible(driver, BasePageUI.DYNAMIC_ERROR_MESSAGE_BY_ID, fieldID);
 		return getElementText(driver, BasePageUI.DYNAMIC_ERROR_MESSAGE_BY_ID, fieldID);
+	}//
+	// ============================================================================
+//  HÀM SORT DYNAMIC GIỐNG HỆ CŨ: CÓ DEBUG + IN RA CONSOLE NHƯ NGUYÊN BẢN
+// ============================================================================
+	// Generic: trả về true nếu dữ liệu trên UI đã được sort theo ascending (true) / descending (false)
+	public <T extends Comparable<? super T>> boolean isDataSorted(
+	        WebDriver driver,
+	        String xpathLocator,
+	        Function<String, T> converter,
+	        boolean ascending) {
+
+	    List<WebElement> elements = driver.findElements(By.xpath(xpathLocator));
+	    if (elements == null || elements.isEmpty()) {
+	        System.out.println("[WARN] No elements found for locator: " + xpathLocator);
+	        return false;
+	    }
+
+	    // Lấy dữ liệu UI -> List<T>
+	    List<T> uiList;
+	    try {
+	        uiList = elements.stream()
+	                .map(e -> converter.apply(e.getText().trim()))
+	                .collect(Collectors.toList());
+	    } catch (Exception ex) {
+	        System.out.println("[ERROR] Convert failed: " + ex.getMessage());
+	        return false;
+	    }
+
+	    // In dữ liệu UI (giống style cũ)
+	    System.out.println("----------- Data on UI -----------");
+	    uiList.forEach(System.out::println);
+
+	    // Tạo bản sorted ASC trong code
+	    List<T> sortedList = new ArrayList<>(uiList);
+	    Collections.sort(sortedList);
+
+	    if (ascending) {
+	        // In đúng cho trường hợp ASC
+	        System.out.println("-----------  SORT ASC data in Code -----------");
+	        sortedList.forEach(System.out::println);
+	        return uiList.equals(sortedList);
+	    } else {
+	        // Nếu cần DESC: đảo chiều của sortedList (từ ASC -> DESC)
+	        Collections.reverse(sortedList);
+	        System.out.println("-----------  SORT DESC data in Code -----------");
+	        sortedList.forEach(System.out::println);
+	        return uiList.equals(sortedList);
+	    }
 	}
+
+	// ----------------------- Wrappers tiện dụng ------------------------
+	// String (case-insensitive)
+	public boolean isStringSortedAsc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> s.toLowerCase(Locale.ROOT), true);
+	}
+	public boolean isStringSortedDesc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> s.toLowerCase(Locale.ROOT), false);
+	}
+
+	// Float / Number (loại bỏ $ , % ký tự không phải số)
+	public boolean isFloatSortedAsc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> {
+	        String cleaned = s.replaceAll("[^0-9\\.-]", ""); // giữ số, dấu - và .
+	        return cleaned.isEmpty() ? 0f : Float.parseFloat(cleaned);
+	    }, true);
+	}
+	public boolean isFloatSortedDesc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> {
+	        String cleaned = s.replaceAll("[^0-9\\.-]", "");
+	        return cleaned.isEmpty() ? 0f : Float.parseFloat(cleaned);
+	    }, false);
+	}
+
+	// Integer
+	public boolean isIntegerSortedAsc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> {
+	        String cleaned = s.replaceAll("[^0-9\\-]", "");
+	        return cleaned.isEmpty() ? 0 : Integer.parseInt(cleaned);
+	    }, true);
+	}
+	public boolean isIntegerSortedDesc(WebDriver driver, String xpathLocator) {
+	    return isDataSorted(driver, xpathLocator, s -> {
+	        String cleaned = s.replaceAll("[^0-9\\-]", "");
+	        return cleaned.isEmpty() ? 0 : Integer.parseInt(cleaned);
+	    }, false);
+	}
+
+	// Date (mẫu mặc định: "MMM dd yyyy" như "May 12 2023", bạn có thể tạo thêm wrapper nếu format khác)
+	public boolean isDateSortedAsc(WebDriver driver, String xpathLocator, String pattern) {
+	    DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH);
+	    return isDataSorted(driver, xpathLocator, s -> LocalDate.parse(s.replace(",", "").trim(), fmt), true);
+	}
+	public boolean isDateSortedDesc(WebDriver driver, String xpathLocator, String pattern) {
+	    DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH);
+	    return isDataSorted(driver, xpathLocator, s -> LocalDate.parse(s.replace(",", "").trim(), fmt), false);
+	}
+
+		public Date convertStringToDate(String dateInString) {
+			dateInString = dateInString.replace(",", "");
+			SimpleDateFormat formatDate = new SimpleDateFormat("MMM dd yyyy");
+			Date date = null;
+			try {
+				date = formatDate.parse(dateInString);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return date;
+		}
+	
+	
 	/** orange HRM Project **/
 	public void openMenuePageByName(WebDriver driver, String pageName) {
 		waitForElementClickable(driver, orangeHRMBasePageUI.DYNAMIC_MENU_LINK, pageName);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite parallel="none" name="Sauce lab">
+	<listeners>
+		<listener class-name="commons.MethodListener" />
+		<listener class-name="reportConfig.AllureTestListener" />
+		<!--<listener class-name="io.qameta.allure.testng.AllureTestNg" />
+		<listener class-name="reportConfig.ExtentTestListenerV5"/>-->
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	<test name="Run on chrome">
+		<parameter name="browser" value="chrome" />
+		<parameter name="url" value="https://www.saucedemo.com/" />
+		<classes>
+			<class	name="com.saucelab.user.Level_19_SAUCELAB_Sort_ASC_DESC" />
+		</classes>
+	</test>
+
+</suite> 
