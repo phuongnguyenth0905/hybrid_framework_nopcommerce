@@ -96,11 +96,11 @@ public class BasePage {
 
 	}
 
-	public void senkeyToAlert(WebDriver driver, String value) {
+	public void sendkeyToAlert(WebDriver driver, String value) {
 		driver.switchTo().alert().sendKeys(value);
 	}
 
-	public void swichToWindownByID(WebDriver driver, String parentID) {
+	public void switchToWindownByID(WebDriver driver, String parentID) {
 		Set<String> allWindowns = driver.getWindowHandles();
 		for (String runWindow : allWindowns) {
 			if (!runWindow.equals(parentID)) {
@@ -110,7 +110,7 @@ public class BasePage {
 		}
 	}
 
-	public void swichToWindownByTitle(WebDriver driver, String title) {
+	public void switchToWindownByTitle(WebDriver driver, String title) {
 		Set<String> allWindowns = driver.getWindowHandles();
 		for (String runWindow : allWindowns) {
 			driver.switchTo().window(runWindow);
@@ -162,7 +162,7 @@ public class BasePage {
 		element.click();
 	}
 
-	public void senKeyToElement(WebDriver driver, String locator, String value) {
+	public void sendKeyToElement(WebDriver driver, String locator, String value) {
 		WebElement element = getWebElement(driver, locator);
 		element.click(); // focus vào input
 		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -170,7 +170,7 @@ public class BasePage {
 		element.sendKeys(value);
 	}
 
-	public void senKeyToElement(WebDriver driver, String locator, String value, String... values) {
+	public void sendKeyToElement(WebDriver driver, String locator, String value, String... values) {
 		WebElement element = getWebElement(driver, getDynamicLocator(locator, values));
 		element.clear();
 		element.sendKeys(value);
@@ -383,7 +383,7 @@ public class BasePage {
 		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", getWebElement(driver, locator));
 	}
 
-	public void senkeyToElementByJS(WebDriver driver, String locator, String value) {
+	public void sendKeyToElementByJS(WebDriver driver, String locator, String value) {
 		jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].setAttribute('value','" + value + "')", getWebElement(driver, locator));
 	}
@@ -488,7 +488,7 @@ public class BasePage {
 			fullFileName = fullFileName + filePath + file + "\n";
 		}
 		fullFileName = fullFileName.trim();
-		senKeyToElement(driver, HomePageUI.UPLOAD_FILE_TYPE, fullFileName);
+		sendKeyToElement(driver, HomePageUI.UPLOAD_FILE_TYPE, fullFileName);
 	}
 
 	public String getDirectorySlash(String foldeName) {
@@ -598,7 +598,7 @@ public class BasePage {
 
 	public void inputToTextboxByID(WebDriver driver, String textboxID, String value) {
 		waitForElementClickable(driver, BasePageUI.DYNAMIC_TEXTBOX_BY_ID, textboxID);
-		senKeyToElement(driver, BasePageUI.DYNAMIC_TEXTBOX_BY_ID, value, textboxID);
+		sendKeyToElement(driver, BasePageUI.DYNAMIC_TEXTBOX_BY_ID, value, textboxID);
 	}
 
 	public void clickToButtonByName(WebDriver driver, String buttonID) {
@@ -720,7 +720,7 @@ public class BasePage {
 	
 	
 	/** orange HRM Project **/
-	public void openMenuePageByName(WebDriver driver, String pageName) {
+	public void openMenuPageByName(WebDriver driver, String pageName) {
 		waitForElementClickable(driver, orangeHRMBasePageUI.DYNAMIC_MENU_LINK, pageName);
 		clickToElement(driver, orangeHRMBasePageUI.DYNAMIC_MENU_LINK, pageName);
 	}
@@ -730,7 +730,7 @@ public class BasePage {
 	}
 	public void enterToTextboxDynamicByLabelAtForm(WebDriver driver, String labelName, String valueText) {
 	    waitForElementVisible(driver, orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, labelName);
-	    senKeyToElement(driver, orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, valueText, labelName);
+	    sendKeyToElement(driver, orangeHRMBasePageUI.DYNAMIC_TEXTBOX_BY_LABEL_AT_FORM, valueText, labelName);
 	   
 	}
 	public void selectItemDynamicInDropdownByLabelAtForm(WebDriver driver, String labelName, String valueItem) {

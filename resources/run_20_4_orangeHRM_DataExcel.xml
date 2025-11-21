@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite parallel="none" name="Nopcommerce - Administrator">
+<suite parallel="none" name="orangeHRM - Administrator">
 	<listeners>
 		<listener class-name="commons.MethodListener" />
-		<listener class-name="reportConfig.AllureTestListener"/>
-		  <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
-		<listener class-name="reportConfig.ExtentTestListenerV5"/>
+		<!--<listener class-name="reportConfig.AllureTestListener" />
+		<listener class-name="io.qameta.allure.testng.AllureTestNg" />
+		<listener class-name="reportConfig.ExtentTestListenerV5"/>-->
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
-	<parameter name="url" value="https://demo.nopcommerce.com" />
 
 	<test name="Run on chrome">
 		<parameter name="browser" value="chrome" />
+		<parameter name="url" value="https://opensource-demo.orangehrmlive.com/web/index.php/auth/login" />
 		<classes>
-			<class
-				name="com.nopcommerce.user.Level_17_Register_Login_Pattern_Object" />
+			<class	name="com.orangehrm.employee.Employee_20_4_Data_Excel" />
 		</classes>
 	</test>
 

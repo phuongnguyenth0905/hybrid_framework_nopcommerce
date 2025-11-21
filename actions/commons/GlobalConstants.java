@@ -16,4 +16,30 @@ public class GlobalConstants {
 	public static final String JAVA_VERSION=System.getProperty("java.version");
 	public static final String OS_NAME=System.getProperty("os.name");
 	
+	public static final String BROWSER_LOG_FOLDER = ROOT_FOLDER + getDirectorySlash("browserLog");
+	
+	public static String getDirectorySlash(String folderName) {
+		if (isMac() || isUnix() || isSolaris()) {
+			folderName = "/" + folderName + "/";
+		} else {
+			folderName = "\\" + folderName + "\\";
+		}
+		return folderName;
+	}
+
+	public static boolean isWindows() {
+		return (GlobalConstants.OS_NAME.toLowerCase().indexOf("win") >= 0);
+	}
+
+	public static boolean isMac() {
+		return (GlobalConstants.OS_NAME.toLowerCase().indexOf("mac") >= 0);
+	}
+
+	public static boolean isUnix() {
+		return (GlobalConstants.OS_NAME.toLowerCase().indexOf("nix") >= 0 || GlobalConstants.OS_NAME.toLowerCase().indexOf("nux") >= 0 || GlobalConstants.OS_NAME.toLowerCase().indexOf("aix") >= 0);
+	}
+
+	public static boolean isSolaris() {
+		return (GlobalConstants.OS_NAME.toLowerCase().indexOf("sunos") >= 0);
+	}
 }

@@ -14,12 +14,12 @@ public class LoginPageObject extends BasePage {
 
 	public void enterToUsernameTextbox(String username) {
 		waitForElementVisible(driver, LoginPageUI.USERNAME_TEXTBOX);
-		senKeyToElement(driver, LoginPageUI.USERNAME_TEXTBOX, username);
+		sendKeyToElement(driver, LoginPageUI.USERNAME_TEXTBOX, username);
 	}
 
 	public void enterToPasswordTextbox(String password) {
 		waitForElementVisible(driver, LoginPageUI.PASSWORD_TEXTBOX);
-		senKeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
+		sendKeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
 	}
 
 	public ProductsPageObject clickToLoginButton() {

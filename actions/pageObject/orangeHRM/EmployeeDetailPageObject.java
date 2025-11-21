@@ -14,12 +14,12 @@ public class EmployeeDetailPageObject extends BasePage {
 
 	public void enterToFirstNameTextboxAtAddEmployeeForm(String firstName) {
 		waitForElementVisible(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_EMPLOYEE_FORM);
-		senKeyToElement(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_EMPLOYEE_FORM, firstName);
+		sendKeyToElement(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_EMPLOYEE_FORM, firstName);
 	}
 
 	public void enterToLastNameTextboxAtAddEmployeeForm(String lastName) {
 		waitForElementVisible(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_EMPLOYEE_FORM);
-		senKeyToElement(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_EMPLOYEE_FORM, lastName);
+		sendKeyToElement(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_EMPLOYEE_FORM, lastName);
 	}
 
 	public boolean isFullnameDisplayedAtHeader(String fullName) {
@@ -42,17 +42,17 @@ public class EmployeeDetailPageObject extends BasePage {
 
 	public void enterToFirstNameTextboxAtPersonalDetailForm(String firstName) {
 		waitForElementVisible(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM);
-		senKeyToElement(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM, firstName);
+		sendKeyToElement(driver, EmployeeDetailPageUI.FIRSTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM, firstName);
 	}
 
 	public void enterToLasttNameTextboxAtPersonalDetailForm(String lastName) {
 		waitForElementVisible(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM);
-		senKeyToElement(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM, lastName);
+		sendKeyToElement(driver, EmployeeDetailPageUI.LASTNAME_TEXTBOX_AT_PERSONAL_DETAIL_FORM, lastName);
 	}
 	//xoaa
 	public void enterToAmountTextboxByLabelAtForm(String amountDetails) {
 	    waitForElementVisible(driver, orangeHRMBasePageUI.AMOUNT_TEXTBOX_BY_LABEL_AT_FORM, amountDetails);
-	    senKeyToElement(driver, orangeHRMBasePageUI.AMOUNT_TEXTBOX_BY_LABEL_AT_FORM, amountDetails);
+	    sendKeyToElement(driver, orangeHRMBasePageUI.AMOUNT_TEXTBOX_BY_LABEL_AT_FORM, amountDetails);
 	   
 	}
 
@@ -90,29 +90,31 @@ public class EmployeeDetailPageObject extends BasePage {
 
 	public void enterToCommentstextareaAtSalaryForm(WebDriver driver, String labelName, String valueText) {
 		waitForElementVisible(driver, EmployeeDetailPageUI.COMMENTS_TEXTBOX_AT_SALARY_FORM, labelName);
-		senKeyToElement(driver, EmployeeDetailPageUI.COMMENTS_TEXTBOX_AT_SALARY_FORM,  valueText, labelName);
+		sendKeyToElement(driver, EmployeeDetailPageUI.COMMENTS_TEXTBOX_AT_SALARY_FORM,  valueText, labelName);
 		
 	}
 	public boolean isVerifyInformationDisplayAtColumnAndRowNumber(WebDriver driver, String columnName, String rowIndex, String expectedValue) {
-//		int columnNameIndex=countElementSize(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, columnName)+1;
-//		String actualValue=getElementText(driver, orangeHRMBasePageUI.CELL_ORANGEHRM_VALUE_MIX_BY_COLUMN_AND_ROW_INDEX, rowIndex,String.valueOf(columnNameIndex));
-//		return actualValue.equals(expectedValue);
-		// Lấy index của cột
-	    int columnIndex = countElementSize(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, columnName) + 1;
-
-	    // Kiểm tra xem row đầu tiên có rỗng không
-	    String firstRowLocator = String.format("(//div[@role='rowgroup']//div[@role='row'])[2]//div[contains(@class,'oxd-table-cell')][2]");
-	    if (!isElementDisplayed(driver, firstRowLocator)) {
-	        rowIndex = String.valueOf(Integer.parseInt(rowIndex) + 1);
-	    }
-
-	    String actualValue = getElementText(driver,
-	        orangeHRMBasePageUI.CELL_ORANGEHRM_VALUE_MIX_BY_COLUMN_AND_ROW_INDEX,
-	        rowIndex, String.valueOf(columnIndex));
-
-	    System.out.printf("[DEBUG] Column: %s | Row: %s | Actual: %s | Expected: %s%n",
-	        columnName, rowIndex, actualValue, expectedValue);
-
-	    return actualValue.trim().equalsIgnoreCase(expectedValue.trim());
+		int columnNameIndex=countElementSize(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, columnName)+1;
+		String actualValue=getElementText(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, rowIndex,String.valueOf(columnNameIndex));
+		return actualValue.equals(expectedValue);
+		
+//		// Lấy index của cột
+//		waitForElementVisible(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, columnName);
+//	    int columnIndex = countElementSize(driver, orangeHRMBasePageUI.TABLE_ORANGEHRM_COLUMN_NAME_SIBLING, columnName) + 1;
+//
+//	    // Kiểm tra xem row đầu tiên có rỗng không
+//	    String firstRowLocator = String.format("(//div[@role='rowgroup']//div[@role='row'])[2]//div[contains(@class,'oxd-table-cell')][2]");
+//	    if (!isElementDisplayed(driver, firstRowLocator)) {
+//	        rowIndex = String.valueOf(Integer.parseInt(rowIndex) + 1);
+//	    }
+//waitForElementVisible(driver, orangeHRMBasePageUI.CELL_ORANGEHRM_VALUE_MIX_BY_COLUMN_AND_ROW_INDEX,
+//	        rowIndex);
+//	    String actualValue = getElementText(driver,
+//	        orangeHRMBasePageUI.CELL_ORANGEHRM_VALUE_MIX_BY_COLUMN_AND_ROW_INDEX,
+//	        rowIndex, String.valueOf(columnIndex));
+//
+//	   // System.out.printf("[DEBUG] Column: %s | Row: %s | Actual: %s | Expected: %s%n", columnName, rowIndex, actualValue, expectedValue);
+//
+//	    return actualValue.trim().equalsIgnoreCase(expectedValue.trim());
 	}
 }

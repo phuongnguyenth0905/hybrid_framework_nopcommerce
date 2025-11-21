@@ -43,6 +43,16 @@
 			</Policies>
 		</RollingFile>
 
+		<!-- Ghi log framework orangeHRM -->
+		<RollingFile name="orangeHRMLog"
+			fileName="logs/orangehrm/orangeHRM.log"
+			filePattern="logs/orangehrm/jQuery-%d{yyyy-MM-dd}.log.gz">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
 	</Appenders>
 
 	<!-- ============ LOGGERS ============ -->
@@ -68,10 +78,19 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="jQueryLog" />
 		</Logger>
-
+		<!-- orangeHRM -->
+		<Logger name="com.orangehrm" level="info" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="orangeHRMLog" />
+		</Logger>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				 pattern="%d{HH:mm:ss} | %-5p | %C{1}:%L - %m%n"/>
+		</Console>
 		<!-- Root logger (default cho các class khác) -->
 		<Root level="info">
 			<AppenderRef ref="Console" />
+			<AppenderRef ref="FileLogger"/>
 		</Root>
 	</Loggers>
 

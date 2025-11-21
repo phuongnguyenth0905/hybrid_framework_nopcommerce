@@ -16,30 +16,30 @@ public class RegisterPageObject extends BasePage {
 
 	public void enterToFirstNameTextbox(String firstName) {
 		waitForElementClickable(driver, RegisterPageUI.FIRST_NAME_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.FIRST_NAME_TEXTBOX, firstName);
+		sendKeyToElement(driver, RegisterPageUI.FIRST_NAME_TEXTBOX, firstName);
 	}
 
 	public void enterToLastNameTextbox(String lastName) {
 		waitForElementClickable(driver, RegisterPageUI.LAST_NAME_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.LAST_NAME_TEXTBOX, lastName);
+		sendKeyToElement(driver, RegisterPageUI.LAST_NAME_TEXTBOX, lastName);
 
 	}
 
 	public void enterToEmailTextbox(String emailAddress) {
 		waitForElementClickable(driver, RegisterPageUI.EMAIL_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.EMAIL_TEXTBOX, emailAddress);
+		sendKeyToElement(driver, RegisterPageUI.EMAIL_TEXTBOX, emailAddress);
 
 	}
 
 	public void enterToPasswordTextbox(String password) {
 		waitForElementClickable(driver, RegisterPageUI.PASSWORD_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.PASSWORD_TEXTBOX, password);
+		sendKeyToElement(driver, RegisterPageUI.PASSWORD_TEXTBOX, password);
 
 	}
 
 	public void enterToConfirmPasswordTextbox(String confirmPassword) {
 		waitForElementClickable(driver, RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, confirmPassword);
+		sendKeyToElement(driver, RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, confirmPassword);
 
 	}
 
@@ -69,7 +69,7 @@ public class RegisterPageObject extends BasePage {
 	}
 	public void inputToCompanyTexbox(String companyName) {
 		waitForElementVisible(driver, RegisterPageUI.COMPANY_TEXTBOX);
-		senKeyToElement(driver, RegisterPageUI.COMPANY_TEXTBOX, companyName);
+		sendKeyToElement(driver, RegisterPageUI.COMPANY_TEXTBOX, companyName);
 
 	}
 }

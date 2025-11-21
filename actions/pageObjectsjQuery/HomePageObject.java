@@ -29,7 +29,7 @@ public class HomePageObject extends BasePage {
 
 	public void inputToHeaderTextboxByLabel(String labelName, String value) {
 		waitForElementVisible(driver, HomePageUI.HEADER_TEXTBOX_BY_LABEL_NAME, labelName);
-		senKeyToElement(driver, HomePageUI.HEADER_TEXTBOX_BY_LABEL_NAME, value, labelName);
+		sendKeyToElement(driver, HomePageUI.HEADER_TEXTBOX_BY_LABEL_NAME, value, labelName);
 		presskeyToElement(driver, HomePageUI.HEADER_TEXTBOX_BY_LABEL_NAME, Keys.ENTER, labelName);
 	}
 
@@ -48,7 +48,7 @@ public class HomePageObject extends BasePage {
 	public void inputToTextboxByColumnNameAtRowNumber(String columName, String rowIndex, String value) {
 		waitForElementVisible(driver, HomePageUI.HEADER_NAME_PRECEDING, columName);
 		int coumnIndex = getElementNumber(driver, HomePageUI.HEADER_NAME_PRECEDING, columName) + 1;
-		senKeyToElement(driver, HomePageUI.TEXTBOX_AT_COLUMN_AND_ROW_INDEX,	value, rowIndex, String.valueOf(coumnIndex));
+		sendKeyToElement(driver, HomePageUI.TEXTBOX_AT_COLUMN_AND_ROW_INDEX,	value, rowIndex, String.valueOf(coumnIndex));
 	}
 
 	public boolean areFileNameLoadedSuccess(String[] fileNames) {

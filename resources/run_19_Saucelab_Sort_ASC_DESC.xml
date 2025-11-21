@@ -11,7 +11,7 @@
 	</listeners>
 
 	<test name="Run on chrome">
-		<parameter name="browser" value="chrome" />
+		<parameter name="browser" value="firefox" />
 		<parameter name="url" value="https://www.saucedemo.com/" />
 		<classes>
 			<class	name="com.saucelab.user.Level_19_SAUCELAB_Sort_ASC_DESC" />

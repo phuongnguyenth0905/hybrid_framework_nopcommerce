@@ -7,6 +7,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.orangehrm.data.UserDataTestJson;
+
 import commons.BaseTest;
 import pageObject.orangeHRM.DashboardPageObject;
 import pageObject.orangeHRM.EmployeeDetailPageObject;
@@ -16,9 +18,12 @@ import pageObject.orangeHRM.PageGeneratorManager;
 import pageObject.orangeHRM.UserDetailPageObject;
 import reportConfig.AllureTestListener;
 
+
 @Listeners(AllureTestListener.class)
-public class Employee_01_Add_Edit_Employee_Users extends BaseTest {
+public class Employee_20_2_Data_Json extends BaseTest {
 	WebDriver driver;
+	UserDataTestJson dataJson;
+	
 	LoginPageObject loginPage;
 	DashboardPageObject dashboardPage;
 	EmployeeDetailPageObject employeeDetailPage;
@@ -40,12 +45,14 @@ public class Employee_01_Add_Edit_Employee_Users extends BaseTest {
 
 		driver = getBrowserDriver(browserName, urlValue);
 		loginPage = PageGeneratorManager.getLoginPage(driver);
+		
+		dataJson=UserDataTestJson.get("testdata/UserData.json");
 
-		firstName = "Florence" + getRandom();
-		lastName = "Williams" + getRandom();
-		editFirstName = "Charles" + getRandom();
-		editLastName = "Carter" + getRandom();
-		editSSN = "078-05-" + getRandom();
+		firstName = dataJson.getFirstName();
+		lastName = dataJson.getLastName();
+		editFirstName = dataJson.getFirstName();
+		editLastName = dataJson.getLastName();
+		editSSN = dataJson.getEditSSN();
 		editGender = "Male";
 		editMaritalStatus = "Single";
 		editNationality = "Vietnamese";
@@ -63,17 +70,17 @@ public class Employee_01_Add_Edit_Employee_Users extends BaseTest {
 		routingNumber = "4789" + getRandom();
 		amountDetails = "12300";
 //
-		street1 = "1501  Paul Wayne Haggerty Road";
-		street2 = "586 Wood Street";
-		city = "Avondale";
-		state = "AL";
-		zipCode = "3"+getRandom();
-		country = "Monaco";
+		street1 = dataJson.getStreet1();
+		street2 =dataJson.getStreet2();
+		city = dataJson.getCity();
+		state = dataJson.getState();
+		zipCode = dataJson.getZipCode();
+		country = dataJson.getCountry();
 		homePhone = "+1 8659683972";
 		mobilePhone = "+1 8659683972";
 		workPhone = "+1 4587516792";
-		workEmail = "auto"+getRandom()+"@hotmail.com";
-		otheEmail = "autoqa"+getRandom()+"@live.com";
+		workEmail = dataJson.getWorkEmail();
+		otheEmail = dataJson.getOtherEmail();//"autoqa"+getRandom()+"@live.com";
 //Job Details
 		joinedDate="2024-12-06";
 		jobTitle="Chief Executive Officer";
@@ -159,9 +166,9 @@ public class Employee_01_Add_Edit_Employee_Users extends BaseTest {
 				+ editMaritalStatus);
 		employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Marital Status", "Single");
 
-		log.info("Edit Employee [Perional] - Step 07: Select to 'Nationality' dropdown with 'Vietnamese': "
+		log.info("Edit Employee [Perional] - Step 07: Select to 'Nationality' dropdown with : "
 				+ editNationality);
-		employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Nationality", "Vietnamese");
+		employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Nationality", editNationality);
 
 		log.info("Edit Employee [Perional] - Step 08: Enter new info to 'Date of Birth' textbox: " + editDateOfBirth);
 		employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Date of Birth", editDateOfBirth);
@@ -483,208 +490,7 @@ public class Employee_01_Add_Edit_Employee_Users extends BaseTest {
 		log.info("Employee [Memberships] - Step 06 : Click to 'Save' button at 'Add Membership' form");
 		employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "Add Membership", "Save");
 	}
-	@Test
-	public void Employee_12_Search_Employee() {
-    log.info("Search Employee - Step 01: Open 'PIM' page menu");
-    dashboardPage.openMenuPageByName(driver, "PIM");
-    employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
-    //Search with Employee Name
-//    log.info("Search Employee - Step 02: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-//    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-//    
-    log.info("Search Employee - Step 03: Clikc to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 04: Verify Employee detail are display successfully: " +employeeID+ "||"+editFirstName +"||"+editLastName+"||"+jobTitle+"||"+employmentStatus+"||"+subUnit+"||"+nameSupervisors);
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Id", "1", employeeID));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "First", "1", editFirstName));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Last Name", "1", editLastName));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Job Title", "1", jobTitle));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Employment Status", "1", employmentStatus));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Sub Unit", "1", subUnit));
-    verifyTrue(employeeDetailPage.isVerifyInformationDisplayAtColumnAndRowNumber(driver, "Supervisor", "1", nameSupervisors));
-        
-    log.info("Search Employee - Step 05: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-  //Search with Employee ID
-    log.info("Search Employee - Step 06: Enter to 'ID' textbox with value '"+employeeID+"'");
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Id", employeeID);
-    
-    log.info("Search Employee - Step 07: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 08: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-       
-    log.info("Search Employee - Step 09: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-  //Search with Employee Name with Employment Status
-    log.info("Search Employee - Step 10: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-    
-    log.info("Search Employee - Step 11: Select to 'Employment Status' dropdownnlist with value '"+employmentStatus+"'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Employment Status", employmentStatus);
-    
-    log.info("Search Employee - Step 12: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 13: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-            
-    log.info("Search Employee - Step 14: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-    //Search with Employee Name with Employment Include
-    log.info("Search Employee - Step 15: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-    
-    log.info("Search Employee - Step 16: Select to 'Include' dropdownnlist with value 'Current Employees Only'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Include", "Current Employees Only");
-    
-    log.info("Search Employee - Step 17: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 18: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-          
-    log.info("Search Employee - Step 19: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-    //Search with Employee Name with Employment Include: Current and Past Employees
-    log.info("Search Employee - Step 20: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-        
-    log.info("Search Employee - Step 21:  Select to 'Include' dropdownnlist with value 'Current and Past Employees'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Include", "Current and Past Employees");
-    
-    log.info("Search Employee - Step 22: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 23: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-         
-    log.info("Search Employee - Step 24: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-  //Search with Employee Name with Employment Include:Past Employees Only
-    log.info("Search Employee - Step 25: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-     
-    log.info("Search Employee - Step 26: Select to 'Include' dropdownnlist with value 'Past Employees Only'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Include", "Past Employees Only");
-    
-    log.info("Search Employee - Step 27: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 28: Verify 'No Records Found' text is displayed");
-    verifyEquals(employeeDetailPage.getSuccessfullyMessageAtPersonalDetailForm(),"No Records Found");
-          
-    log.info("Search Employee - Step 29: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-  //Search with Employee Name with Supervisor Name
-    log.info("Search Employee - Step 30: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-    
-    log.info("Search Employee - Step 31: Enter 'Supervisor Name' textbox with value ");
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Supervisor Name", "");//
-    
-    log.info("Search Employee - Step 32: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 33: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-//     
-    log.info("Search Employee - Step 34: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-//Search with Employee Name with Job Title
-    log.info("Search Employee - Step 35: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-    
-    log.info("Search Employee - Step 36: Select to 'Job Title' dropdownnlist with value 'Automaton Tester'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Job Title", "Automaton Tester");
-    
-    log.info("Search Employee - Step 37: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 38: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-     
-    log.info("Search Employee - Step 39: Click to 'Reset' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Reset" );
-  //Search with Employee Name with Sub Unit
-    log.info("Search Employee - Step 40: Enter to 'Employee Name' textbox with value '"+editFirstName+" "+editLastName);
-    employeeDetailPage.enterToTextboxDynamicByLabelAtForm(driver, "Employee Name", editFirstName+" "+editLastName);
-    
-    log.info("Search Employee - Step 41: Select to 'Sub Unit' dropdownnlist with value 'Automaton Tester'");
-    employeeDetailPage.selectItemDynamicInDropdownByLabelAtForm(driver, "Sub Unit", "Engineering");
-    
-    log.info("Search Employee - Step 42: Click to 'Search' at 'Employee Information' form");
-    employeeDetailPage.clickToButotnByNameAtFormHeader(driver, "PIM", "Search");
-    
-    log.info("Search Employee - Step 43: Verify Employee Detail are displayed successfully");
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Id", "1", employeeID));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "First (& Middle) Name", "1", editFirstName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Last Name", "1", editLastName));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Job Title", "1", jobTitle));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Employment Status", "1", employmentStatus));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Sub Unit", "1", subUnit));
-//    verifyTrue(employeeDetailPage.isInformationDisplayAtColumnAndRowNumber(driver, "resultTable", "Supervisor", "1", nameSupervisors));
-      
-	}
-
-	//@Test
-	public void Employee_07_Add_User_To_Employee() {
-
-	}
-
-	//@Test
-	public void Employee_08_Search_User() {
-
-	}
-
-	//@Test
-	public void Employee_09_Delete_User() {
-
-	}
-
-	//@Test
-	public void Employee_10_Delete_Employee() {
-
-	}
-
+	
 	@AfterClass
 	public void afterClass() {
 		closeBrowserDriver();
