@@ -30,14 +30,14 @@ public class Level_13_Login_Admin_Log_Report extends BaseTest{
 		log.info("Login - Step 01: Login Wordpress ");
 		loginPage = new LoginPageObject(driver);
 		log.info("Login - Step 02: Input to Username ");
-		loginPage.inputToUsernameTextbox("phuongnguyenth");
+		loginPage.inputToUsernameTextbox("");
 		
 		log.info("Login -Step 03: Click to Login Button after input Username");
 		loginPage.clickToContinueButton();
 		loginPage.sleepInSecond(2);
 		
 		log.info("Login -Step 04: Input to password");
-		loginPage.inputToPasswordTextbox("Phuongminh020503");
+		loginPage.inputToPasswordTextbox("");
 		
 		log.info("Login -Step 05: Click to Login Button after input Password");
 		loginPage.clickToLoginButton();
