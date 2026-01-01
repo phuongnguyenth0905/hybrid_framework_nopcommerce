@@ -27,10 +27,10 @@ public class Level_12_Login_Assert_Verrify extends BaseTest{
 
 	//@Test
 	public void Login_01_Valid_Email_Password() {
-		loginPage.inputToUsernameTextbox("phuongnguyenth");
+		loginPage.inputToUsernameTextbox("");
 		loginPage.clickToContinueButton();
 		loginPage.sleepInSecond(2);
-		loginPage.inputToPasswordTextbox("Phuongminh020503");
+		loginPage.inputToPasswordTextbox("");
 		loginPage.clickToLoginButton();
 		loginPage.sleepInSecond(2);
 		dashboardPageObject = new DashboardPageObject(driver);
